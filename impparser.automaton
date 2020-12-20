@@ -1,0 +1,692 @@
+State 0:
+prog' -> . prog [ # ]
+-- On prog shift to state 1
+-- On decl shift to state 2
+-- On TYPE reduce production decl -> 
+
+State 1:
+prog' -> prog . [ # ]
+-- On # accept prog
+
+State 2:
+decl -> decl . decls [ TYPE ]
+prog -> decl . nonempty_list(foncs) EOF [ # ]
+-- On TYPE shift to state 3
+-- On nonempty_list(foncs) shift to state 70
+-- On foncs shift to state 72
+-- On decls shift to state 68
+
+State 3:
+decls -> TYPE . VARIABLE SEMI [ TYPE ]
+decls -> TYPE . VARIABLE EQ expr SEMI [ TYPE ]
+foncs -> TYPE . VARIABLE LPAR param RPAR LBRACKET decl instr RBRACKET [ TYPE EOF ]
+-- On VARIABLE shift to state 4
+
+State 4:
+decls -> TYPE VARIABLE . SEMI [ TYPE ]
+decls -> TYPE VARIABLE . EQ expr SEMI [ TYPE ]
+foncs -> TYPE VARIABLE . LPAR param RPAR LBRACKET decl instr RBRACKET [ TYPE EOF ]
+-- On SEMI shift to state 5
+-- On LPAR shift to state 6
+-- On EQ shift to state 16
+
+State 5:
+decls -> TYPE VARIABLE SEMI . [ WHILE VARIABLE TYPE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE reduce production decls -> TYPE VARIABLE SEMI 
+-- On VARIABLE reduce production decls -> TYPE VARIABLE SEMI 
+-- On TYPE reduce production decls -> TYPE VARIABLE SEMI 
+-- On RETURN reduce production decls -> TYPE VARIABLE SEMI 
+-- On RBRACKET reduce production decls -> TYPE VARIABLE SEMI 
+-- On PRINT reduce production decls -> TYPE VARIABLE SEMI 
+-- On MINUS reduce production decls -> TYPE VARIABLE SEMI 
+-- On INT reduce production decls -> TYPE VARIABLE SEMI 
+-- On IF reduce production decls -> TYPE VARIABLE SEMI 
+
+State 6:
+foncs -> TYPE VARIABLE LPAR . param RPAR LBRACKET decl instr RBRACKET [ TYPE EOF ]
+-- On param shift to state 7
+-- On TYPE reduce production param -> 
+-- On RPAR reduce production param -> 
+
+State 7:
+foncs -> TYPE VARIABLE LPAR param . RPAR LBRACKET decl instr RBRACKET [ TYPE EOF ]
+param -> param . params [ TYPE RPAR ]
+-- On TYPE shift to state 8
+-- On RPAR shift to state 11
+-- On params shift to state 69
+
+State 8:
+params -> TYPE . VARIABLE COMMA [ TYPE RPAR ]
+params -> TYPE . VARIABLE [ TYPE RPAR ]
+-- On VARIABLE shift to state 9
+
+State 9:
+params -> TYPE VARIABLE . COMMA [ TYPE RPAR ]
+params -> TYPE VARIABLE . [ TYPE RPAR ]
+-- On COMMA shift to state 10
+-- On TYPE reduce production params -> TYPE VARIABLE 
+-- On RPAR reduce production params -> TYPE VARIABLE 
+
+State 10:
+params -> TYPE VARIABLE COMMA . [ TYPE RPAR ]
+-- On TYPE reduce production params -> TYPE VARIABLE COMMA 
+-- On RPAR reduce production params -> TYPE VARIABLE COMMA 
+
+State 11:
+foncs -> TYPE VARIABLE LPAR param RPAR . LBRACKET decl instr RBRACKET [ TYPE EOF ]
+-- On LBRACKET shift to state 12
+
+State 12:
+foncs -> TYPE VARIABLE LPAR param RPAR LBRACKET . decl instr RBRACKET [ TYPE EOF ]
+-- On decl shift to state 13
+-- On WHILE reduce production decl -> 
+-- On VARIABLE reduce production decl -> 
+-- On TYPE reduce production decl -> 
+-- On RETURN reduce production decl -> 
+-- On RBRACKET reduce production decl -> 
+-- On PRINT reduce production decl -> 
+-- On MINUS reduce production decl -> 
+-- On INT reduce production decl -> 
+-- On IF reduce production decl -> 
+
+State 13:
+decl -> decl . decls [ WHILE VARIABLE TYPE RETURN RBRACKET PRINT MINUS INT IF ]
+foncs -> TYPE VARIABLE LPAR param RPAR LBRACKET decl . instr RBRACKET [ TYPE EOF ]
+-- On TYPE shift to state 14
+-- On instr shift to state 34
+-- On decls shift to state 68
+-- On WHILE reduce production instr -> 
+-- On VARIABLE reduce production instr -> 
+-- On RETURN reduce production instr -> 
+-- On RBRACKET reduce production instr -> 
+-- On PRINT reduce production instr -> 
+-- On MINUS reduce production instr -> 
+-- On INT reduce production instr -> 
+-- On IF reduce production instr -> 
+
+State 14:
+decls -> TYPE . VARIABLE SEMI [ WHILE VARIABLE TYPE RETURN RBRACKET PRINT MINUS INT IF ]
+decls -> TYPE . VARIABLE EQ expr SEMI [ WHILE VARIABLE TYPE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On VARIABLE shift to state 15
+
+State 15:
+decls -> TYPE VARIABLE . SEMI [ WHILE VARIABLE TYPE RETURN RBRACKET PRINT MINUS INT IF ]
+decls -> TYPE VARIABLE . EQ expr SEMI [ WHILE VARIABLE TYPE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On SEMI shift to state 5
+-- On EQ shift to state 16
+
+State 16:
+decls -> TYPE VARIABLE EQ . expr SEMI [ WHILE VARIABLE TYPE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On VARIABLE shift to state 17
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On expr shift to state 32
+
+State 17:
+expr -> VARIABLE . LPAR appel RPAR [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> VARIABLE . [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On LPAR shift to state 18
+-- On WHILE reduce production expr -> VARIABLE 
+-- On VARIABLE reduce production expr -> VARIABLE 
+-- On SEMI reduce production expr -> VARIABLE 
+-- On RPAR reduce production expr -> VARIABLE 
+-- On RETURN reduce production expr -> VARIABLE 
+-- On RBRACKET reduce production expr -> VARIABLE 
+-- On PRINT reduce production expr -> VARIABLE 
+-- On PLUS reduce production expr -> VARIABLE 
+-- On MUL reduce production expr -> VARIABLE 
+-- On MINUS reduce production expr -> VARIABLE 
+-- On LT reduce production expr -> VARIABLE 
+-- On INT reduce production expr -> VARIABLE 
+-- On IF reduce production expr -> VARIABLE 
+
+State 18:
+expr -> VARIABLE LPAR . appel RPAR [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On appel shift to state 19
+-- On VARIABLE reduce production appel -> 
+-- On RPAR reduce production appel -> 
+-- On MINUS reduce production appel -> 
+-- On INT reduce production appel -> 
+
+State 19:
+appel -> appel . appels [ VARIABLE RPAR MINUS INT ]
+expr -> VARIABLE LPAR appel . RPAR [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On VARIABLE shift to state 17
+-- On RPAR shift to state 20
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On expr shift to state 24
+-- On appels shift to state 31
+
+State 20:
+expr -> VARIABLE LPAR appel RPAR . [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On WHILE reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On VARIABLE reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On SEMI reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On RPAR reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On RETURN reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On RBRACKET reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On PRINT reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On PLUS reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On MUL reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On MINUS reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On LT reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On INT reduce production expr -> VARIABLE LPAR appel RPAR 
+-- On IF reduce production expr -> VARIABLE LPAR appel RPAR 
+
+State 21:
+expr -> MINUS . INT [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On INT shift to state 22
+
+State 22:
+expr -> MINUS INT . [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On WHILE reduce production expr -> MINUS INT 
+-- On VARIABLE reduce production expr -> MINUS INT 
+-- On SEMI reduce production expr -> MINUS INT 
+-- On RPAR reduce production expr -> MINUS INT 
+-- On RETURN reduce production expr -> MINUS INT 
+-- On RBRACKET reduce production expr -> MINUS INT 
+-- On PRINT reduce production expr -> MINUS INT 
+-- On PLUS reduce production expr -> MINUS INT 
+-- On MUL reduce production expr -> MINUS INT 
+-- On MINUS reduce production expr -> MINUS INT 
+-- On LT reduce production expr -> MINUS INT 
+-- On INT reduce production expr -> MINUS INT 
+-- On IF reduce production expr -> MINUS INT 
+
+State 23:
+expr -> INT . [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On WHILE reduce production expr -> INT 
+-- On VARIABLE reduce production expr -> INT 
+-- On SEMI reduce production expr -> INT 
+-- On RPAR reduce production expr -> INT 
+-- On RETURN reduce production expr -> INT 
+-- On RBRACKET reduce production expr -> INT 
+-- On PRINT reduce production expr -> INT 
+-- On PLUS reduce production expr -> INT 
+-- On MUL reduce production expr -> INT 
+-- On MINUS reduce production expr -> INT 
+-- On LT reduce production expr -> INT 
+-- On INT reduce production expr -> INT 
+-- On IF reduce production expr -> INT 
+
+State 24:
+appels -> expr . [ VARIABLE RPAR MINUS INT ]
+expr -> expr . PLUS expr [ VARIABLE RPAR PLUS MUL MINUS LT INT ]
+expr -> expr . MUL expr [ VARIABLE RPAR PLUS MUL MINUS LT INT ]
+expr -> expr . LT expr [ VARIABLE RPAR PLUS MUL MINUS LT INT ]
+-- On PLUS shift to state 25
+-- On MUL shift to state 27
+-- On LT shift to state 29
+-- On VARIABLE reduce production appels -> expr 
+-- On RPAR reduce production appels -> expr 
+-- On MINUS reduce production appels -> expr 
+-- On INT reduce production appels -> expr 
+
+State 25:
+expr -> expr PLUS . expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On VARIABLE shift to state 17
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On expr shift to state 26
+
+State 26:
+expr -> expr . PLUS expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr PLUS expr . [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr . MUL expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr . LT expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On MUL shift to state 27
+-- On WHILE reduce production expr -> expr PLUS expr 
+-- On VARIABLE reduce production expr -> expr PLUS expr 
+-- On SEMI reduce production expr -> expr PLUS expr 
+-- On RPAR reduce production expr -> expr PLUS expr 
+-- On RETURN reduce production expr -> expr PLUS expr 
+-- On RBRACKET reduce production expr -> expr PLUS expr 
+-- On PRINT reduce production expr -> expr PLUS expr 
+-- On PLUS reduce production expr -> expr PLUS expr 
+-- On MINUS reduce production expr -> expr PLUS expr 
+-- On LT reduce production expr -> expr PLUS expr 
+-- On INT reduce production expr -> expr PLUS expr 
+-- On IF reduce production expr -> expr PLUS expr 
+
+State 27:
+expr -> expr MUL . expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On VARIABLE shift to state 17
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On expr shift to state 28
+
+State 28:
+expr -> expr . PLUS expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr . MUL expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr MUL expr . [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr . LT expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On WHILE reduce production expr -> expr MUL expr 
+-- On VARIABLE reduce production expr -> expr MUL expr 
+-- On SEMI reduce production expr -> expr MUL expr 
+-- On RPAR reduce production expr -> expr MUL expr 
+-- On RETURN reduce production expr -> expr MUL expr 
+-- On RBRACKET reduce production expr -> expr MUL expr 
+-- On PRINT reduce production expr -> expr MUL expr 
+-- On PLUS reduce production expr -> expr MUL expr 
+-- On MUL reduce production expr -> expr MUL expr 
+-- On MINUS reduce production expr -> expr MUL expr 
+-- On LT reduce production expr -> expr MUL expr 
+-- On INT reduce production expr -> expr MUL expr 
+-- On IF reduce production expr -> expr MUL expr 
+
+State 29:
+expr -> expr LT . expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On VARIABLE shift to state 17
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On expr shift to state 30
+
+State 30:
+expr -> expr . PLUS expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr . MUL expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr . LT expr [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr LT expr . [ WHILE VARIABLE SEMI RPAR RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+-- On PLUS shift to state 25
+-- On MUL shift to state 27
+-- On WHILE reduce production expr -> expr LT expr 
+-- On VARIABLE reduce production expr -> expr LT expr 
+-- On SEMI reduce production expr -> expr LT expr 
+-- On RPAR reduce production expr -> expr LT expr 
+-- On RETURN reduce production expr -> expr LT expr 
+-- On RBRACKET reduce production expr -> expr LT expr 
+-- On PRINT reduce production expr -> expr LT expr 
+-- On MINUS reduce production expr -> expr LT expr 
+-- On LT reduce production expr -> expr LT expr 
+-- On INT reduce production expr -> expr LT expr 
+-- On IF reduce production expr -> expr LT expr 
+
+State 31:
+appel -> appel appels . [ VARIABLE RPAR MINUS INT ]
+-- On VARIABLE reduce production appel -> appel appels 
+-- On RPAR reduce production appel -> appel appels 
+-- On MINUS reduce production appel -> appel appels 
+-- On INT reduce production appel -> appel appels 
+
+State 32:
+decls -> TYPE VARIABLE EQ expr . SEMI [ WHILE VARIABLE TYPE RETURN RBRACKET PRINT MINUS INT IF ]
+expr -> expr . PLUS expr [ SEMI PLUS MUL LT ]
+expr -> expr . MUL expr [ SEMI PLUS MUL LT ]
+expr -> expr . LT expr [ SEMI PLUS MUL LT ]
+-- On SEMI shift to state 33
+-- On PLUS shift to state 25
+-- On MUL shift to state 27
+-- On LT shift to state 29
+
+State 33:
+decls -> TYPE VARIABLE EQ expr SEMI . [ WHILE VARIABLE TYPE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE reduce production decls -> TYPE VARIABLE EQ expr SEMI 
+-- On VARIABLE reduce production decls -> TYPE VARIABLE EQ expr SEMI 
+-- On TYPE reduce production decls -> TYPE VARIABLE EQ expr SEMI 
+-- On RETURN reduce production decls -> TYPE VARIABLE EQ expr SEMI 
+-- On RBRACKET reduce production decls -> TYPE VARIABLE EQ expr SEMI 
+-- On PRINT reduce production decls -> TYPE VARIABLE EQ expr SEMI 
+-- On MINUS reduce production decls -> TYPE VARIABLE EQ expr SEMI 
+-- On INT reduce production decls -> TYPE VARIABLE EQ expr SEMI 
+-- On IF reduce production decls -> TYPE VARIABLE EQ expr SEMI 
+
+State 34:
+foncs -> TYPE VARIABLE LPAR param RPAR LBRACKET decl instr . RBRACKET [ TYPE EOF ]
+instr -> instr . instrs [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE shift to state 35
+-- On VARIABLE shift to state 41
+-- On RETURN shift to state 45
+-- On RBRACKET shift to state 67
+-- On PRINT shift to state 49
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On IF shift to state 54
+-- On instrs shift to state 65
+-- On expr shift to state 66
+
+State 35:
+instrs -> WHILE . LPAR expr RPAR LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On LPAR shift to state 36
+
+State 36:
+instrs -> WHILE LPAR . expr RPAR LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On VARIABLE shift to state 17
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On expr shift to state 37
+
+State 37:
+expr -> expr . PLUS expr [ RPAR PLUS MUL LT ]
+expr -> expr . MUL expr [ RPAR PLUS MUL LT ]
+expr -> expr . LT expr [ RPAR PLUS MUL LT ]
+instrs -> WHILE LPAR expr . RPAR LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On RPAR shift to state 38
+-- On PLUS shift to state 25
+-- On MUL shift to state 27
+-- On LT shift to state 29
+
+State 38:
+instrs -> WHILE LPAR expr RPAR . LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On LBRACKET shift to state 39
+
+State 39:
+instrs -> WHILE LPAR expr RPAR LBRACKET . instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On instr shift to state 40
+-- On WHILE reduce production instr -> 
+-- On VARIABLE reduce production instr -> 
+-- On RETURN reduce production instr -> 
+-- On RBRACKET reduce production instr -> 
+-- On PRINT reduce production instr -> 
+-- On MINUS reduce production instr -> 
+-- On INT reduce production instr -> 
+-- On IF reduce production instr -> 
+
+State 40:
+instr -> instr . instrs [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+instrs -> WHILE LPAR expr RPAR LBRACKET instr . RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE shift to state 35
+-- On VARIABLE shift to state 41
+-- On RETURN shift to state 45
+-- On RBRACKET shift to state 48
+-- On PRINT shift to state 49
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On IF shift to state 54
+-- On instrs shift to state 65
+-- On expr shift to state 66
+
+State 41:
+expr -> VARIABLE . LPAR appel RPAR [ WHILE VARIABLE RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> VARIABLE . [ WHILE VARIABLE RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+instrs -> VARIABLE . EQ expr SEMI [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On LPAR shift to state 18
+-- On EQ shift to state 42
+-- On WHILE reduce production expr -> VARIABLE 
+-- On VARIABLE reduce production expr -> VARIABLE 
+-- On RETURN reduce production expr -> VARIABLE 
+-- On RBRACKET reduce production expr -> VARIABLE 
+-- On PRINT reduce production expr -> VARIABLE 
+-- On PLUS reduce production expr -> VARIABLE 
+-- On MUL reduce production expr -> VARIABLE 
+-- On MINUS reduce production expr -> VARIABLE 
+-- On LT reduce production expr -> VARIABLE 
+-- On INT reduce production expr -> VARIABLE 
+-- On IF reduce production expr -> VARIABLE 
+
+State 42:
+instrs -> VARIABLE EQ . expr SEMI [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On VARIABLE shift to state 17
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On expr shift to state 43
+
+State 43:
+expr -> expr . PLUS expr [ SEMI PLUS MUL LT ]
+expr -> expr . MUL expr [ SEMI PLUS MUL LT ]
+expr -> expr . LT expr [ SEMI PLUS MUL LT ]
+instrs -> VARIABLE EQ expr . SEMI [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On SEMI shift to state 44
+-- On PLUS shift to state 25
+-- On MUL shift to state 27
+-- On LT shift to state 29
+
+State 44:
+instrs -> VARIABLE EQ expr SEMI . [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE reduce production instrs -> VARIABLE EQ expr SEMI 
+-- On VARIABLE reduce production instrs -> VARIABLE EQ expr SEMI 
+-- On RETURN reduce production instrs -> VARIABLE EQ expr SEMI 
+-- On RBRACKET reduce production instrs -> VARIABLE EQ expr SEMI 
+-- On PRINT reduce production instrs -> VARIABLE EQ expr SEMI 
+-- On MINUS reduce production instrs -> VARIABLE EQ expr SEMI 
+-- On INT reduce production instrs -> VARIABLE EQ expr SEMI 
+-- On IF reduce production instrs -> VARIABLE EQ expr SEMI 
+
+State 45:
+instrs -> RETURN . expr SEMI [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On VARIABLE shift to state 17
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On expr shift to state 46
+
+State 46:
+expr -> expr . PLUS expr [ SEMI PLUS MUL LT ]
+expr -> expr . MUL expr [ SEMI PLUS MUL LT ]
+expr -> expr . LT expr [ SEMI PLUS MUL LT ]
+instrs -> RETURN expr . SEMI [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On SEMI shift to state 47
+-- On PLUS shift to state 25
+-- On MUL shift to state 27
+-- On LT shift to state 29
+
+State 47:
+instrs -> RETURN expr SEMI . [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE reduce production instrs -> RETURN expr SEMI 
+-- On VARIABLE reduce production instrs -> RETURN expr SEMI 
+-- On RETURN reduce production instrs -> RETURN expr SEMI 
+-- On RBRACKET reduce production instrs -> RETURN expr SEMI 
+-- On PRINT reduce production instrs -> RETURN expr SEMI 
+-- On MINUS reduce production instrs -> RETURN expr SEMI 
+-- On INT reduce production instrs -> RETURN expr SEMI 
+-- On IF reduce production instrs -> RETURN expr SEMI 
+
+State 48:
+instrs -> WHILE LPAR expr RPAR LBRACKET instr RBRACKET . [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE reduce production instrs -> WHILE LPAR expr RPAR LBRACKET instr RBRACKET 
+-- On VARIABLE reduce production instrs -> WHILE LPAR expr RPAR LBRACKET instr RBRACKET 
+-- On RETURN reduce production instrs -> WHILE LPAR expr RPAR LBRACKET instr RBRACKET 
+-- On RBRACKET reduce production instrs -> WHILE LPAR expr RPAR LBRACKET instr RBRACKET 
+-- On PRINT reduce production instrs -> WHILE LPAR expr RPAR LBRACKET instr RBRACKET 
+-- On MINUS reduce production instrs -> WHILE LPAR expr RPAR LBRACKET instr RBRACKET 
+-- On INT reduce production instrs -> WHILE LPAR expr RPAR LBRACKET instr RBRACKET 
+-- On IF reduce production instrs -> WHILE LPAR expr RPAR LBRACKET instr RBRACKET 
+
+State 49:
+instrs -> PRINT . LPAR expr RPAR SEMI [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On LPAR shift to state 50
+
+State 50:
+instrs -> PRINT LPAR . expr RPAR SEMI [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On VARIABLE shift to state 17
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On expr shift to state 51
+
+State 51:
+expr -> expr . PLUS expr [ RPAR PLUS MUL LT ]
+expr -> expr . MUL expr [ RPAR PLUS MUL LT ]
+expr -> expr . LT expr [ RPAR PLUS MUL LT ]
+instrs -> PRINT LPAR expr . RPAR SEMI [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On RPAR shift to state 52
+-- On PLUS shift to state 25
+-- On MUL shift to state 27
+-- On LT shift to state 29
+
+State 52:
+instrs -> PRINT LPAR expr RPAR . SEMI [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On SEMI shift to state 53
+
+State 53:
+instrs -> PRINT LPAR expr RPAR SEMI . [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE reduce production instrs -> PRINT LPAR expr RPAR SEMI 
+-- On VARIABLE reduce production instrs -> PRINT LPAR expr RPAR SEMI 
+-- On RETURN reduce production instrs -> PRINT LPAR expr RPAR SEMI 
+-- On RBRACKET reduce production instrs -> PRINT LPAR expr RPAR SEMI 
+-- On PRINT reduce production instrs -> PRINT LPAR expr RPAR SEMI 
+-- On MINUS reduce production instrs -> PRINT LPAR expr RPAR SEMI 
+-- On INT reduce production instrs -> PRINT LPAR expr RPAR SEMI 
+-- On IF reduce production instrs -> PRINT LPAR expr RPAR SEMI 
+
+State 54:
+instrs -> IF . LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On LPAR shift to state 55
+
+State 55:
+instrs -> IF LPAR . expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On VARIABLE shift to state 17
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On expr shift to state 56
+
+State 56:
+expr -> expr . PLUS expr [ RPAR PLUS MUL LT ]
+expr -> expr . MUL expr [ RPAR PLUS MUL LT ]
+expr -> expr . LT expr [ RPAR PLUS MUL LT ]
+instrs -> IF LPAR expr . RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On RPAR shift to state 57
+-- On PLUS shift to state 25
+-- On MUL shift to state 27
+-- On LT shift to state 29
+
+State 57:
+instrs -> IF LPAR expr RPAR . LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On LBRACKET shift to state 58
+
+State 58:
+instrs -> IF LPAR expr RPAR LBRACKET . instr RBRACKET ELSE LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On instr shift to state 59
+-- On WHILE reduce production instr -> 
+-- On VARIABLE reduce production instr -> 
+-- On RETURN reduce production instr -> 
+-- On RBRACKET reduce production instr -> 
+-- On PRINT reduce production instr -> 
+-- On MINUS reduce production instr -> 
+-- On INT reduce production instr -> 
+-- On IF reduce production instr -> 
+
+State 59:
+instr -> instr . instrs [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+instrs -> IF LPAR expr RPAR LBRACKET instr . RBRACKET ELSE LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE shift to state 35
+-- On VARIABLE shift to state 41
+-- On RETURN shift to state 45
+-- On RBRACKET shift to state 60
+-- On PRINT shift to state 49
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On IF shift to state 54
+-- On instrs shift to state 65
+-- On expr shift to state 66
+
+State 60:
+instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET . ELSE LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On ELSE shift to state 61
+
+State 61:
+instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE . LBRACKET instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On LBRACKET shift to state 62
+
+State 62:
+instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET . instr RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On instr shift to state 63
+-- On WHILE reduce production instr -> 
+-- On VARIABLE reduce production instr -> 
+-- On RETURN reduce production instr -> 
+-- On RBRACKET reduce production instr -> 
+-- On PRINT reduce production instr -> 
+-- On MINUS reduce production instr -> 
+-- On INT reduce production instr -> 
+-- On IF reduce production instr -> 
+
+State 63:
+instr -> instr . instrs [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr . RBRACKET [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE shift to state 35
+-- On VARIABLE shift to state 41
+-- On RETURN shift to state 45
+-- On RBRACKET shift to state 64
+-- On PRINT shift to state 49
+-- On MINUS shift to state 21
+-- On INT shift to state 23
+-- On IF shift to state 54
+-- On instrs shift to state 65
+-- On expr shift to state 66
+
+State 64:
+instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET . [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE reduce production instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET 
+-- On VARIABLE reduce production instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET 
+-- On RETURN reduce production instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET 
+-- On RBRACKET reduce production instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET 
+-- On PRINT reduce production instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET 
+-- On MINUS reduce production instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET 
+-- On INT reduce production instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET 
+-- On IF reduce production instrs -> IF LPAR expr RPAR LBRACKET instr RBRACKET ELSE LBRACKET instr RBRACKET 
+
+State 65:
+instr -> instr instrs . [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE reduce production instr -> instr instrs 
+-- On VARIABLE reduce production instr -> instr instrs 
+-- On RETURN reduce production instr -> instr instrs 
+-- On RBRACKET reduce production instr -> instr instrs 
+-- On PRINT reduce production instr -> instr instrs 
+-- On MINUS reduce production instr -> instr instrs 
+-- On INT reduce production instr -> instr instrs 
+-- On IF reduce production instr -> instr instrs 
+
+State 66:
+expr -> expr . PLUS expr [ WHILE VARIABLE RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr . MUL expr [ WHILE VARIABLE RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+expr -> expr . LT expr [ WHILE VARIABLE RETURN RBRACKET PRINT PLUS MUL MINUS LT INT IF ]
+instrs -> expr . [ WHILE VARIABLE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On PLUS shift to state 25
+-- On MUL shift to state 27
+-- On LT shift to state 29
+-- On WHILE reduce production instrs -> expr 
+-- On VARIABLE reduce production instrs -> expr 
+-- On RETURN reduce production instrs -> expr 
+-- On RBRACKET reduce production instrs -> expr 
+-- On PRINT reduce production instrs -> expr 
+-- On MINUS reduce production instrs -> expr 
+-- On INT reduce production instrs -> expr 
+-- On IF reduce production instrs -> expr 
+
+State 67:
+foncs -> TYPE VARIABLE LPAR param RPAR LBRACKET decl instr RBRACKET . [ TYPE EOF ]
+-- On TYPE reduce production foncs -> TYPE VARIABLE LPAR param RPAR LBRACKET decl instr RBRACKET 
+-- On EOF reduce production foncs -> TYPE VARIABLE LPAR param RPAR LBRACKET decl instr RBRACKET 
+
+State 68:
+decl -> decl decls . [ WHILE VARIABLE TYPE RETURN RBRACKET PRINT MINUS INT IF ]
+-- On WHILE reduce production decl -> decl decls 
+-- On VARIABLE reduce production decl -> decl decls 
+-- On TYPE reduce production decl -> decl decls 
+-- On RETURN reduce production decl -> decl decls 
+-- On RBRACKET reduce production decl -> decl decls 
+-- On PRINT reduce production decl -> decl decls 
+-- On MINUS reduce production decl -> decl decls 
+-- On INT reduce production decl -> decl decls 
+-- On IF reduce production decl -> decl decls 
+
+State 69:
+param -> param params . [ TYPE RPAR ]
+-- On TYPE reduce production param -> param params 
+-- On RPAR reduce production param -> param params 
+
+State 70:
+prog -> decl nonempty_list(foncs) . EOF [ # ]
+-- On EOF shift to state 71
+
+State 71:
+prog -> decl nonempty_list(foncs) EOF . [ # ]
+-- On # reduce production prog -> decl nonempty_list(foncs) EOF 
+
+State 72:
+nonempty_list(foncs) -> foncs . [ EOF ]
+nonempty_list(foncs) -> foncs . nonempty_list(foncs) [ EOF ]
+-- On TYPE shift to state 73
+-- On nonempty_list(foncs) shift to state 75
+-- On foncs shift to state 72
+-- On EOF reduce production nonempty_list(foncs) -> foncs 
+
+State 73:
+foncs -> TYPE . VARIABLE LPAR param RPAR LBRACKET decl instr RBRACKET [ TYPE EOF ]
+-- On VARIABLE shift to state 74
+
+State 74:
+foncs -> TYPE VARIABLE . LPAR param RPAR LBRACKET decl instr RBRACKET [ TYPE EOF ]
+-- On LPAR shift to state 6
+
+State 75:
+nonempty_list(foncs) -> foncs nonempty_list(foncs) . [ EOF ]
+-- On EOF reduce production nonempty_list(foncs) -> foncs nonempty_list(foncs) 
+
