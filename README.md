@@ -5,13 +5,21 @@
 
 
 
-# Instructions d'utilisation
+# Instructions d'utilisation dans la console 
 
-## Compiler avec :
+## À taper une seule fois pour créer un environnement :
+```
+eval $(opam config env)
+```
+
+## Puis à chaque modification, compiler avec :
 ```
 ocamlbuild main.native
 ```
-## Tester avec :
+## Et tester avec :
 ```
+./main.native [nom du fichier c à tester].c
+
+exemple: 
 ./main.native test.c
 ```
