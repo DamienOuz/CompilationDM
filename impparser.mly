@@ -6,7 +6,7 @@
 %token<string> VARIABLE
 %token<Imp.typ> TYPE
 %token PLUS ETOILE MINUS MUL RETURN LT GT GTE LTE EGALE NEQ AND OR
-%token WHILE IF ELSE
+%token WHILE IF ELSE FOR
 %token SEMI LBRACKET RBRACKET LPAR RPAR PRINT EQ COMMA
 %token EOF
 
@@ -66,6 +66,9 @@ instrs:
     { If (e, st, se) }
   | WHILE LPAR e=expr RPAR LBRACKET s=instr RBRACKET
     { While (e, s) }
+  | FOR LPAR t=TYPE v=VARIABLE EQ e1=expr SEMI v1=VARIABLE LT e2=expr SEMI v2=VARIABLE PLUS PLUS RPAR LBRACKET s=instr RBRACKET
+    { For(t, v, e1, e2, s) } (* La boucle for n'est pas operationnelle, il doit manquer peu de chose pour qu'elle le soit mais malheureusement par manque de temps je n'ai pas pu finir 
+                                je vous laisse neanmoins les traces de recherche a propos de ce bonus qui est quasi completement effectué *)
   | RETURN e=expr SEMI
     { Return (e) }
   |  e=expr 

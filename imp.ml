@@ -21,6 +21,7 @@ type instr =
   | Set     of string * expr
   | If      of expr * seq * seq
   | While   of expr * seq
+  | For     of typ * string * expr * expr * seq
   | Return  of expr
   | Expr    of expr
 
